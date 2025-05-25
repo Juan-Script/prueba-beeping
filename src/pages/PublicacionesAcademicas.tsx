@@ -1,7 +1,13 @@
 import CustomTable from '@/shared/components/CustomTable'
 import CustomTopbar from '@/shared/components/CustomTopbar'
+import { useData } from '@/shared/hooks/useData'
+import { EndpointTypes } from '@/shared/utils/Types/EndpointTypeS'
 
 export default function PublicacionesAcademicas() {
+    const data = useData({
+        endpoint: EndpointTypes.WORKS
+    })
+
     return (
         <div
             className="w-full"
@@ -10,7 +16,8 @@ export default function PublicacionesAcademicas() {
                 title='Publicaciones Académicas'
             />
 
-            <CustomTable 
+            <CustomTable
+                data={data}
             />
         </div>
     )

@@ -7,9 +7,13 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import type { PublicacionesInt } from "@/interfaces/PublicacionesInt"
 
+interface Props {
+    data: PublicacionesInt;
+}
 
-export default function CustomTable() {
+export default function CustomTable({ data }: Props) {
     return (
         <Table
             className="p-[20px]"
