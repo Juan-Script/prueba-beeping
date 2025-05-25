@@ -1,10 +1,15 @@
-import { Button } from "@/components/ui/button"
+import PublicacionesAcademicas from "./pages/PublicacionesAcademicas"
+import { CustomSidebar } from "./shared/components/CustomSidebar"
+import { SidebarProvider } from "@/components/ui/sidebar"
 
 function App() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-svh">
-      <Button>Click me</Button>
-    </div>
+    <SidebarProvider>
+      <CustomSidebar
+      />
+      <PublicacionesAcademicas
+      />
+    </SidebarProvider>
   )
 }
 
