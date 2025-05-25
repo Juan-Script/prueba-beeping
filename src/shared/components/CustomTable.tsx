@@ -7,39 +7,39 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import type { PublicacionesInt } from "@/interfaces/PublicacionesInt"
+import type { ColumnsInt } from "@/interfaces/ColumnsInt";
 
 interface Props {
-    data: PublicacionesInt;
+    data: any;
+    columns: any[];
+    total?: number;
 }
 
-export default function CustomTable({ data }: Props) {
+export default function CustomTable({ data, columns }: Props) {
+
     return (
-        <Table
-            className="p-[20px]"
-        >
-            <TableCaption
-                className="text-[14px]"
-            >
+        <Table className="p-[20px]">
+            <TableCaption className="text-[14px]">
                 Listado de publicaciones académicas
             </TableCaption>
             <TableHeader>
                 <TableRow>
-                    <TableHead className="w-[100px]">Invoice</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Method</TableHead>
-                    <TableHead className="text-right">Amount</TableHead>
+                    {columns?.map((col) => (
+                        <TableHead key={col.key}>{col.header}</TableHead>
+                    ))}
                 </TableRow>
             </TableHeader>
             <TableBody>
-                <TableRow>
-                    <TableCell className="font-medium">INV001</TableCell>
-                    <TableCell>Paid</TableCell>
-                    <TableCell>Credit Card</TableCell>
-                    <TableCell className="text-right">$250.00</TableCell>
-                </TableRow>
+                {data.map((row: any, idx: number) => (
+                    <TableRow key={idx}>
+                        {columns.map((col) => (
+                            <TableCell key={col.key}>
+                                {String(row[col.key] ?? "")}
+                            </TableCell>
+                        ))}
+                    </TableRow>
+                ))}
             </TableBody>
         </Table>
-
     )
 }
