@@ -38,15 +38,10 @@ export default function CustomTable({ data, columns, onLoadMore, hasMore = true 
         }
     }, [data.length, hasMore, onLoadMore, rowVirtualizer.getVirtualItems()])
 
-    console.log("columns", columns)
-
     return (
-        <div className="w-full max-w-full overflow-x-auto">
+        <div className="w-full h-full max-w-full overflow-x-auto">
             <div ref={parentRef} className="h-[600px] overflow-auto border-1 rounded-[10px] w-full">
                 <Table className="w-full min-w-[700px]">
-                    <TableCaption className="text-[14px]">
-                        Listado de publicaciones académicas
-                    </TableCaption>
                     <TableHeader>
                         <TableRow>
                             {columns?.map((col) => (
@@ -88,6 +83,7 @@ export default function CustomTable({ data, columns, onLoadMore, hasMore = true 
                                                     ? "w-[50px] min-w-[80px] truncate"
                                                     : "max-w-[150px] min-w-[80px] truncate"
                                             }
+                                            title={String(row[col.key] ?? "")}
                                         >
                                             {String(row[col.key] ?? "")}
                                         </TableCell>

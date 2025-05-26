@@ -34,6 +34,25 @@ export default function PublicacionesTable() {
         setPage(1);
     };
 
+    const filters = [
+        {
+            value: "cited_by_count:desc",
+            label: "Más citados",
+        },
+        {
+            value: "cited_by_count:asc",
+            label: "Menos citados",
+        },
+        {
+            value: "publication_date:desc",
+            label: "Más recientes",
+        },
+        {
+            value: "publication_date:asc",
+            label: "Más antiguos",
+        },
+    ]
+
     return (
         <div className="space-y-4 my-4 mx-4">
             <CustomFilters 
@@ -41,6 +60,7 @@ export default function PublicacionesTable() {
                 sort={sort}
                 handleSearch={handleSearch}
                 handleSort={handleSort}
+                filters={filters}
             />
             <CustomTable
                 data={data?.results || []}

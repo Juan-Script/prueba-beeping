@@ -6,9 +6,11 @@ interface Props {
     sort: any;
     handleSearch: any;
     handleSort: any;
+    filters: any[];
 }
 
-export default function CustomFilters({ search, sort, handleSearch, handleSort }: Props) {
+export default function CustomFilters({ search, sort, handleSearch, handleSort, filters }: Props) {
+
     return (
         <div className="flex gap-4">
             <Input
@@ -22,10 +24,14 @@ export default function CustomFilters({ search, sort, handleSearch, handleSort }
                     <SelectValue placeholder="Ordenar por" />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="cited_by_count:desc">Más citados</SelectItem>
-                    <SelectItem value="cited_by_count:asc">Menos citados</SelectItem>
-                    <SelectItem value="publication_date:desc">Más recientes</SelectItem>
-                    <SelectItem value="publication_date:asc">Más antiguos</SelectItem>
+                    {filters.map((filter: any, index: number) => (
+                        <SelectItem
+                            key={index}
+                            value={filter.value}
+                        >
+                            {filter.label}
+                        </SelectItem>
+                    ))}
                 </SelectContent>
             </Select>
         </div>
