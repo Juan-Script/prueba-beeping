@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
-import type { EndpointTypes } from "../utils/Types/EndpointTypeS";
 import { getData } from "../middlewares/middlewares";
+import type { EndpointTypes} from "../utils/Types/EndpointTypes"
+
 
 interface UseDataProps {
   endpoint: EndpointTypes;
@@ -61,14 +62,17 @@ export const useData = ({
       const response = await getData(`${endpoint}?${queryString}`);
 
       if (page === 1) {
-        setData(response.data as PaginatedResponse);
+        setData(response.data as any);
       } else {
         setData(prev => {
-          if (!prev) return response.data as PaginatedResponse;
+          if (!prev) return response.data as any;
+          const resp = response.data as any;
           return {
-            ...response.data,
-            results: [...prev.results, ...(response.data as PaginatedResponse).results]
-          } as PaginatedResponse;
+            results: [...prev.results, ...resp.results],
+            count: resp.count,
+            next: resp.next,
+            previous: resp.previous,
+          };
         });
       }
       setError(null);

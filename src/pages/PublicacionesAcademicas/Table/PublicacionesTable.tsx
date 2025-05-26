@@ -1,6 +1,6 @@
 import CustomTable from "@/shared/components/CustomTable";
 import { useData } from "@/shared/hooks/useData";
-import { EndpointTypes } from "@/shared/utils/Types/EndpointTypeS";
+import { EndpointTypes } from "@/shared/utils/Types/EndpointTypes";
 import PublicacionesColumns from "./Columns/PublicacionesColumns";
 import { useState } from "react";
 import CustomFilters from "@/shared/components/CustomFilters";
