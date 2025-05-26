@@ -5,6 +5,10 @@ import { getData } from "../middlewares/middlewares";
 interface UseDataProps {
   endpoint: EndpointTypes;
   ignoreRequest?: boolean;
+  page?: number;
+  limit?: number;
+  sort?: string;
+  search?: string;
 }
 
 interface ApiError {
@@ -14,21 +18,59 @@ interface ApiError {
   };
 }
 
+interface PaginatedResponse {
+  results: any[];
+  count: number;
+  next: string | null;
+  previous: string | null;
+}
+
 export const useData = ({
   endpoint,
   ignoreRequest = false,
+  page = 1,
+  limit = 20,
+  sort,
+  search,
 }: UseDataProps) => {
-  const [data, setData] = useState<unknown>(null);
+  const [data, setData] = useState<PaginatedResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ApiError | null>(null);
+
+  const buildQueryString = () => {
+    const params = new URLSearchParams();
+    
+    params.append('page', page.toString());
+    params.append('per-page', limit.toString());
+    
+    if (sort) {
+      params.append('sort', sort);
+    }
+    
+    if (search) {
+      params.append('filter', `title.search:${search}`);
+    }
+
+    return params.toString();
+  };
 
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await getData(endpoint);
+      const queryString = buildQueryString();
+      const response = await getData(`${endpoint}?${queryString}`);
 
-      console.log("respones", response)
-      setData(response.data);
+      if (page === 1) {
+        setData(response.data as PaginatedResponse);
+      } else {
+        setData(prev => {
+          if (!prev) return response.data as PaginatedResponse;
+          return {
+            ...response.data,
+            results: [...prev.results, ...(response.data as PaginatedResponse).results]
+          } as PaginatedResponse;
+        });
+      }
       setError(null);
     } catch (err) {
       setError(err as ApiError);
@@ -41,7 +83,7 @@ export const useData = ({
     if (!ignoreRequest) {
       fetchData();
     }
-  }, [endpoint, ignoreRequest]);
+  }, [endpoint, ignoreRequest, page, limit, sort, search]);
 
   return {
     data,
@@ -49,5 +91,6 @@ export const useData = ({
     error,
     refresh: fetchData,
     status: !error ? 200 : error?.response?.status,
+    hasMore: data?.next !== null
   }
 }
