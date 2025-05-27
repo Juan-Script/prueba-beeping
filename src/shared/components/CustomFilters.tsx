@@ -1,12 +1,13 @@
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import type { Filter, FiltersInt } from "@/interfaces/TableInt";
 
 interface Props {
-    search: any;
-    sort: any;
-    handleSearch: any;
-    handleSort: any;
-    filters: any[];
+    search: string;
+    sort: string;
+    handleSearch: (value: string) => void;
+    handleSort: (value: string) => void;
+    filters: FiltersInt;
 }
 
 export default function CustomFilters({ search, sort, handleSearch, handleSort, filters }: Props) {
@@ -24,7 +25,7 @@ export default function CustomFilters({ search, sort, handleSearch, handleSort, 
                     <SelectValue placeholder="Ordenar por" />
                 </SelectTrigger>
                 <SelectContent>
-                    {filters.map((filter: any, index: number) => (
+                    {filters.map((filter: Filter, index: number) => (
                         <SelectItem
                             key={index}
                             value={filter.value}

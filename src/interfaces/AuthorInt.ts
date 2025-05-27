@@ -1,4 +1,6 @@
 export interface AuthorInt {
-    id: string;
-    display_name: string;
+    author: {
+        id: string;
+        display_name: string;
+    }
 }

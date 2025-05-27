@@ -1,29 +1,15 @@
 import { useState, useEffect } from "react"
 import { getData } from "../middlewares/middlewares";
-import type { EndpointTypes} from "../utils/Types/EndpointTypes"
+import type { EndpointTypes } from "../utils/Types/EndpointTypes"
+import type { PaginatedResponseInt, ApiErrorInt, UseDataReturnInt, TableRowInt } from "@/interfaces/TableInt";
 
-
-interface UseDataProps {
+interface Props {
   endpoint: EndpointTypes;
   ignoreRequest?: boolean;
   page?: number;
   limit?: number;
   sort?: string;
   search?: string;
-}
-
-interface ApiError {
-  response?: {
-    status: number;
-    data: unknown;
-  };
-}
-
-interface PaginatedResponse {
-  results: any[];
-  count: number;
-  next: string | null;
-  previous: string | null;
 }
 
 export const useData = ({
@@ -33,10 +19,10 @@ export const useData = ({
   limit = 20,
   sort,
   search,
-}: UseDataProps) => {
-  const [data, setData] = useState<PaginatedResponse | null>(null);
+}: Props): UseDataReturnInt => {
+  const [data, setData] = useState<PaginatedResponseInt | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<ApiError | null>(null);
+  const [error, setError] = useState<ApiErrorInt | null>(null);
 
   const buildQueryString = () => {
     const params = new URLSearchParams();
@@ -60,24 +46,24 @@ export const useData = ({
       setLoading(true);
       const queryString = buildQueryString();
       const response = await getData(`${endpoint}?${queryString}`);
+      const responseData = response.data as unknown as PaginatedResponseInt;
 
       if (page === 1) {
-        setData(response.data as any);
+        setData(responseData);
       } else {
         setData(prev => {
-          if (!prev) return response.data as any;
-          const resp = response.data as any;
+          if (!prev) return responseData;
           return {
-            results: [...prev.results, ...resp.results],
-            count: resp.count,
-            next: resp.next,
-            previous: resp.previous,
+            results: [...prev.results, ...responseData.results],
+            count: responseData.count,
+            next: responseData.next,
+            previous: responseData.previous,
           };
         });
       }
       setError(null);
     } catch (err) {
-      setError(err as ApiError);
+      setError(err as ApiErrorInt);
     } finally {
       setLoading(false);
     }
