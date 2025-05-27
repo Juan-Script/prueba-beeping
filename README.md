@@ -53,9 +53,9 @@ npm run dev
 ## 🏗️ Estructura del Proyecto
 ```
 src/
-├── components/    # Componentes reutilizables
+├── components/    # Componentes creados por shadcn/ui
 ├── pages/         # Páginas de la aplicación
-├── hooks/         # Custom hooks
+├── hooks/         # Hooks creados por shadcn/ui
 ├── utils/         # Utilidades y helpers
 ├── interfaces/    # Definiciones de tipos TypeScript
 └── shared/        # Elementos compartidos en la app
