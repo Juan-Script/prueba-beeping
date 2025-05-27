@@ -1,4 +1,4 @@
-import { Home, Settings } from "lucide-react"
+import { TableOfContents } from "lucide-react"
 
 import {
   Sidebar,
@@ -15,7 +15,7 @@ const items = [
   {
     title: "Tabla",
     url: "#",
-    icon: Home,
+    icon: TableOfContents,
   },
 ]
 

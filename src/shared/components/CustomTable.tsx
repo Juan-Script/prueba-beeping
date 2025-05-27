@@ -51,7 +51,7 @@ export default function CustomTable({ data, columns, onLoadMore, hasMore = true 
                                         col.key === "titulo"
                                             ? "max-w-[400px] min-w-[200px] truncate"
                                             : col.key === "cited_by_count" 
-                                            ? "max-w-[50px] min-w-[80px] truncate"
+                                            ? "max-w-[100px] min-w-[90px] truncate"
                                             : "max-w-[150px] min-w-[80px] truncate"
                                     }
                                 >
@@ -83,9 +83,13 @@ export default function CustomTable({ data, columns, onLoadMore, hasMore = true 
                                                     ? "w-[50px] min-w-[80px] truncate"
                                                     : "max-w-[150px] min-w-[80px] truncate"
                                             }
-                                            title={String(row[col.key] ?? "")}
+                                            title={col.key === "display_name"
+                                                ? row.authorships?.map((a: any) => a.author?.display_name).join(", ")
+                                                : String(row[col.key] ?? "")}
                                         >
-                                            {String(row[col.key] ?? "")}
+                                            {col.key === "display_name"
+                                                ? row.authorships?.map((a: any) => a.author?.display_name).join(", ")
+                                                : String(row[col.key] ?? "")}
                                         </TableCell>
                                     ))}
                                 </TableRow>
