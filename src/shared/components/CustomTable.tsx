@@ -39,8 +39,8 @@ export default function CustomTable({ data, columns, onLoadMore, hasMore = true 
     }, [data.length, hasMore, onLoadMore, rowVirtualizer.getVirtualItems()])
 
     return (
-        <div className="w-full h-full max-w-full overflow-x-auto">
-            <div ref={parentRef} className="h-[600px] overflow-auto border-1 rounded-[10px] w-full">
+        <div className="w-full h-full max-w-full overflow-x-auto rounded-[10px] border-1">
+            <div ref={parentRef} className="h-[600px] overflow-auto w-full">
                 <Table className="w-full min-w-[700px]">
                     <TableHeader>
                         <TableRow>
