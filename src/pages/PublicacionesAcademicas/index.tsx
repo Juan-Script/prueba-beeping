@@ -2,7 +2,6 @@ import CustomTopbar from '@/shared/components/CustomTopbar'
 import PublicacionesTable from './Table/PublicacionesTable'
 
 export default function PublicacionesAcademicas() {
-   
 
     return (
         <div

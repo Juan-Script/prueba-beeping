@@ -40,8 +40,11 @@ export default function CustomTable({ data, columns, onLoadMore, hasMore = true 
 
     return (
         <div className="w-full h-full max-w-full overflow-x-auto rounded-[10px] border-1">
-            <Table className="w-full min-w-[600px]">
-                <TableHeader>
+            <div
+                ref={parentRef}
+                className="h-[calc(100vh-160px)] min-h-full overflow-y-auto w-full"
+            >
+                <Table className="w-full min-w-[600px]">
                     <TableRow>
                         {columns?.map((col) => (
                             <TableHead
@@ -49,22 +52,15 @@ export default function CustomTable({ data, columns, onLoadMore, hasMore = true 
                                 className={
                                     col.key === "titulo"
                                         ? "max-w-[400px] min-w-[200px] truncate"
-                                        : col.key === "cited_by_count" 
-                                        ? "max-w-[100px] min-w-[90px] truncate"
-                                        : "max-w-[150px] min-w-[80px] truncate"
+                                        : col.key === "cited_by_count"
+                                            ? "max-w-[100px] min-w-[90px] truncate"
+                                            : "max-w-[150px] min-w-[80px] truncate"
                                 }
                             >
                                 {col.header}
                             </TableHead>
                         ))}
                     </TableRow>
-                </TableHeader>
-            </Table>
-            <div
-                ref={parentRef}
-                className="h-[calc(100vh-200px)] min-h-[300px] overflow-y-auto w-full"
-            >
-                <Table className="w-full min-w-[600px]">
                     <TableBody>
                         {rowVirtualizer.getVirtualItems().length > 0 && (
                             <tr style={{ height: `${rowVirtualizer.getVirtualItems()[0].start}px` }} />
@@ -82,11 +78,11 @@ export default function CustomTable({ data, columns, onLoadMore, hasMore = true 
                                             className={
                                                 col.key === "titulo"
                                                     ? "max-w-[400px] min-w-[200px] truncate"
-                                                    : col.key === "publication_year" 
-                                                    ? "w-[50px] min-w-[80px] truncate"
-                                                    : col.key === "cited_by_count" 
-                                                    ? "w-[50px] min-w-[80px] truncate"
-                                                    : "max-w-[150px] min-w-[80px] truncate"
+                                                    : col.key === "publication_year"
+                                                        ? "w-[50px] min-w-[80px] truncate"
+                                                        : col.key === "cited_by_count"
+                                                            ? "w-[50px] min-w-[80px] truncate"
+                                                            : "max-w-[150px] min-w-[80px] truncate"
                                             }
                                             title={col.key === "display_name"
                                                 ? row?.authorships?.map((a) => a?.author?.display_name).join(", ")
